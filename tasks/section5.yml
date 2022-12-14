@@ -260,8 +260,6 @@
     dest: /etc/ssh/sshd_config
     regexp: '^X11Forwarding'
     line: 'X11Forwarding no'
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - patch

@@ -10,8 +10,6 @@
     regexp: "^max_log_file ="
     line: "max_log_file = 10"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -25,8 +23,6 @@
     regexp: "^admin_space_left_action"
     line: "admin_space_left_action = halt"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -40,8 +36,6 @@
     regexp: "^space_left_action"
     line: "space_left_action = email"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -55,8 +49,6 @@
     regexp: "^action_mail_acct"
     line: "action_mail_acct = root"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -70,8 +62,6 @@
     regexp: "^max_log_file_action"
     line: "max_log_file_action = keep_logs"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -84,9 +74,6 @@
     name: auditd
     state: started
     enabled: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
-    - amazonlinux2cis_enable_auditd is defined and amazonlinux2cis_enable_auditd
   tags:
     - level2
     - auditd
@@ -102,8 +89,6 @@
     follow: yes
   ignore_errors: yes
   notify: generate new grub config
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -122,8 +107,6 @@
             -a always,exit -F arch=b32 -S clock_settime -k time-change\n
             -w /etc/localtime -p wa -k time-change"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -142,8 +125,6 @@
             -w /etc/shadow -p wa -k identity\n
             -w /etc/security/opasswd -p wa -k identity"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -164,8 +145,6 @@
             -w /etc/sysconfig/network -p wa -k system-locale\n
             -w /etc/sysconfig/network-scripts/ -p wa -k system-locale"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -181,8 +160,6 @@
     block: " -w /etc/selinux/ -p wa -k MAC-policy\n
             -w /usr/share/selinux/ -p wa -k MAC-policy"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -198,8 +175,6 @@
     block: " -w /var/log/lastlog -p wa -k logins\n
             -w /var/run/faillock/ -p wa -k logins"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -216,8 +191,6 @@
             -w /var/log/wtmp -p wa -k logins\n
             -w /var/log/btmp -p wa -k logins"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -237,8 +210,6 @@
             -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
             -a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -256,8 +227,6 @@
             -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access\n
             -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -268,8 +237,6 @@
 - name: "SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected"
   command: /bin/true
   changed_when: no
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -282,8 +249,6 @@
     dest: /etc/audit/rules.d/audit.rules
     line: "-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -296,8 +261,6 @@
     dest: /etc/audit/rules.d/audit.rules
     line: "-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -313,8 +276,6 @@
     block: " -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete\n
             -a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -327,8 +288,6 @@
     dest: /etc/audit/rules.d/audit.rules
     line: "-w /etc/sudoers -p wa -k scope"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -341,8 +300,6 @@
     dest: /etc/audit/audit.rules
     line: "-w /etc/sudoers -p wa -k scope"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -355,8 +312,6 @@
     dest: /etc/audit/rules.d/audit.rules
     line: "-w /etc/sudoers.d -p wa -k scope"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -369,8 +324,6 @@
     dest: /etc/audit/rules.d/audit.rules
     line: "-w /var/log/sudo.log -p wa -k actions"
     state: present
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -388,8 +341,6 @@
             -w /sbin/modprobe -p x -k modules\n
             -a always,exit -F arch=b64 -S init_module -S delete_module -k modules"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -405,8 +356,6 @@
     insertafter: EOF
     line: "-e 2"
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
   tags:
     - level2
     - auditd
@@ -569,10 +518,6 @@
     regexp: '^\$InputTCPServerRun 514'
     line: '$InputTCPServerRun 514'
     create: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_rsyslog is defined and amazonlinux2cis_rsyslog
-    - amazonlinux2cis_log_server is defined and amazonlinux2cis_log_server
   tags:
     - level1
     - patch
@@ -597,9 +542,6 @@
     name: syslog-ng
     enabled: yes
   ignore_errors: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
   tags:
     - level1
     - patch
@@ -636,9 +578,6 @@
 - name: "NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host"
   debug:
     msg: "Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
   tags:
     - level1
     - patch
@@ -648,9 +587,6 @@
 - name: "NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
   debug:
     msg: "Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
   tags:
     - level1
     - patch
@@ -671,8 +607,6 @@
 
 - name: "SCORED | 4.2.4 | PATCH | Ensure permissions on all logfiles are configured"
   command: find /var/log -type f -exec chmod g-wx,o-rwx {} +
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
     - level1
     - patch
@@ -682,8 +616,6 @@
 - name: "NOTSCORED | 4.3 | PATCH | Ensure logrotate is configured"
   debug:
     msg: "Edit /etc/logrotate.conf and /etc/logrotate.d/* to ensure logs are rotated according to site policy."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
     - level1
     - patch

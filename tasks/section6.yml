@@ -305,110 +305,83 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-  copy:
-    src: scripts/6.2.7.sh
-    dest: /opt/6.2.7.sh
-    owner: root
-    group: root
-    mode: 0700
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.7
-    - low
-    - level1
-    - low
-
-- name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-  shell: /opt/6.2.7.sh
-  args:
-    executable: /bin/bash
-  register: home_directories_exist
-  no_log: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.7
-    - low
-    - level1
-    - low
-
 # - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-#   debug:
-#     var: home_directories_exist.stdout_lines
+#   copy:
+#     src: scripts/6.2.7.sh
+#     dest: /opt/6.2.7.sh
+#     owner: root
+#     group: root
+#     mode: 0700
+#   changed_when: no
 #   when:
 #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-#     - home_directories_exist is defined and home_directories_exist.stdout != ""
 #   tags:
 #     - rule_6.2.7
 #     - low
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-  debug:
-    msg: "PASS | 6.2.7 | All users' home directories exist."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - home_directories_exist is defined and home_directories_exist.stdout == ""
-  tags:
-    - rule_6.2.7
-    - low
-    - level1
-    - low
+# - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
+#   shell: /opt/6.2.7.sh
+#   args:
+#     executable: /bin/bash
+#   register: home_directories_exist
+#   no_log: yes
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#   tags:
+#     - rule_6.2.7
+#     - low
+#     - level1
+#     - low
 
-- name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
-  file:
-    path: /opt/6.2.7.sh
-    owner: root
-    group: root
-    state: absent
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.7
-    - low
-    - level1
-    - low
+# # - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
+# #   debug:
+# #     var: home_directories_exist.stdout_lines
+# #   when:
+# #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+# #     - home_directories_exist is defined and home_directories_exist.stdout != ""
+# #   tags:
+# #     - rule_6.2.7
+# #     - low
+# #     - level1
+# #     - low
 
-- name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-  copy:
-    src: scripts/6.2.8.sh
-    dest: /opt/6.2.8.sh
-    owner: root
-    group: root
-    mode: 0700
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
-  tags:
-    - rule_6.2.8
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
+#   debug:
+#     msg: "PASS | 6.2.7 | All users' home directories exist."
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#     - home_directories_exist is defined and home_directories_exist.stdout == ""
+#   tags:
+#     - rule_6.2.7
+#     - low
+#     - level1
+#     - low
 
-- name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-  shell: /opt/6.2.8.sh
-  args:
-    executable: /bin/bash
-  register: home_directories_permissions
-  no_log: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
-  tags:
-    - rule_6.2.8
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.7 | PATCH | Ensure all users' home directories exist"
+#   file:
+#     path: /opt/6.2.7.sh
+#     owner: root
+#     group: root
+#     state: absent
+#   changed_when: no
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#   tags:
+#     - rule_6.2.7
+#     - low
+#     - level1
+#     - low
 
 # - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-#   debug:
-#     var: home_directories_permissions.stdout_lines
+#   copy:
+#     src: scripts/6.2.8.sh
+#     dest: /opt/6.2.8.sh
+#     owner: root
+#     group: root
+#     mode: 0700
+#   changed_when: no
 #   when:
 #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
 #     - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
@@ -418,101 +391,128 @@
 #     - patch
 #     - low
 
-- name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-  debug:
-    msg: "PASS | 6.2.8 | Users' home directories permissions are 750 or more restrictive."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - home_directories_permissions is defined and home_directories_permissions.stdout == ""
-    - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
-  tags:
-    - rule_6.2.8
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
+#   shell: /opt/6.2.8.sh
+#   args:
+#     executable: /bin/bash
+#   register: home_directories_permissions
+#   no_log: yes
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#     - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
+#   tags:
+#     - rule_6.2.8
+#     - level1
+#     - patch
+#     - low
 
-- name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
-  file:
-    path: /opt/6.2.8.sh
-    owner: root
-    group: root
-    state: absent
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
-  tags:
-    - rule_6.2.8
-    - level1
-    - patch
-    - low
+# # - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
+# #   debug:
+# #     var: home_directories_permissions.stdout_lines
+# #   when:
+# #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+# #     - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
+# #   tags:
+# #     - rule_6.2.8
+# #     - level1
+# #     - patch
+# #     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-  copy:
-    src: scripts/6.2.9.sh
-    dest: /opt/6.2.9.sh
-    owner: root
-    group: root
-    mode: 0700
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.9
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
+#   debug:
+#     msg: "PASS | 6.2.8 | Users' home directories permissions are 750 or more restrictive."
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#     - home_directories_permissions is defined and home_directories_permissions.stdout == ""
+#     - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
+#   tags:
+#     - rule_6.2.8
+#     - level1
+#     - patch
+#     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-  shell: /opt/6.2.9.sh
-  args:
-    executable: /bin/bash
-  register: home_directories_own
-  no_log: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.9
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.8 | PATCH | Ensure users' home directories permissions are 750 or more restrictive"
+#   file:
+#     path: /opt/6.2.8.sh
+#     owner: root
+#     group: root
+#     state: absent
+#   changed_when: no
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#     - amazonlinux2cis_modify_user_homes is defined and amazonlinux2cis_modify_user_homes
+#   tags:
+#     - rule_6.2.8
+#     - level1
+#     - patch
+#     - low
 
 # - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-#   debug:
-#     var: home_directories_own.stdout_lines
+#   copy:
+#     src: scripts/6.2.9.sh
+#     dest: /opt/6.2.9.sh
+#     owner: root
+#     group: root
+#     mode: 0700
+#   changed_when: no
 #   when:
 #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
 #   tags:
 #     - rule_6.2.9
 #     - level1
 #     - patch
+#     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-  debug:
-    msg: "PASS | 6.2.9 | Users' own their home directories."
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - home_directories_own is defined and home_directories_own.stdout == ""
-  tags:
-    - rule_6.2.9
-    - level1
-    - patch
-    - low
+# - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+#   shell: /opt/6.2.9.sh
+#   args:
+#     executable: /bin/bash
+#   register: home_directories_own
+#   no_log: yes
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#   tags:
+#     - rule_6.2.9
+#     - level1
+#     - patch
+#     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
-  file:
-    path: /opt/6.2.9.sh
-    owner: root
-    group: root
-    state: absent
-  changed_when: no
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-  tags:
-    - rule_6.2.9
-    - level1
-    - patch
-    - low
+# # - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+# #   debug:
+# #     var: home_directories_own.stdout_lines
+# #   when:
+# #     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+# #   tags:
+# #     - rule_6.2.9
+# #     - level1
+# #     - patch
+
+# - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+#   debug:
+#     msg: "PASS | 6.2.9 | Users' own their home directories."
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#     - home_directories_own is defined and home_directories_own.stdout == ""
+#   tags:
+#     - rule_6.2.9
+#     - level1
+#     - patch
+#     - low
+
+# - name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+#   file:
+#     path: /opt/6.2.9.sh
+#     owner: root
+#     group: root
+#     state: absent
+#   changed_when: no
+#   when:
+#     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+#   tags:
+#     - rule_6.2.9
+#     - level1
+#     - patch
+#     - low
 
 - name: "SCORED | 6.2.10 | PATCH | Ensure users' dot files are not group or world writable"
   copy:
