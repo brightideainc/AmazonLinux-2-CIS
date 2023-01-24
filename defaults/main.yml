@@ -44,7 +44,7 @@ amazonlinux2cis_aide_cron:
 
 # Section 1.6.1.2 & 1.6.1.3 | Ensure SELinux state is enforcing and configured
 # true = SELinux is set to enforcing | false = SELinux is not set to enforcing
-amazonlinux2cis_selinux_disable: false
+amazonlinux2cis_selinux_disable: true
 # Section 1.6.1.2 & 1.6.1.3 | SELinux policy
 amazonlinux2cis_selinux_pol: targeted
 

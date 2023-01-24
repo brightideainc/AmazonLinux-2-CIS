@@ -171,6 +171,24 @@
     - rule_5.1.8
     - low
 
+- name: "5.2.2 | Ensure sudo commands use pty (Automated)"
+  lineinfile:
+    path: /etc/sudoers
+    line: 'Defaults use_pty'
+  when:
+    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+  tags:
+    - level1
+
+- name: "5.2.3 Ensure sudo log file exists (Automated)"
+  lineinfile:
+    path: /etc/sudoers
+    line: 'Defaults logfile="/var/log/sudo.log"'
+  when:
+    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+  tags:
+    - level1
+
 - name: "SCORED | 5.2.1 | PATCH | Ensure permissions on /etc/ssh/sshd_config are configured"
   file:
     dest: /etc/ssh/sshd_config
@@ -197,7 +215,7 @@
     - low
 
 - name: "SCORED | 5.2.2 | Ensure permissions on SSH private host key files are configured"
-  command: find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec chmod 0640 {} \;
+  command: find /etc/ssh -xdev -type f -name 'ssh_host_*_key' -exec chmod 0600 {} \;
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
@@ -397,9 +415,7 @@
     state: present
     dest: /etc/ssh/sshd_config
     regexp: '^MACs'
-    line: 'MACs {{ amazonlinux2cis_ssh_mac_algorithms | quote }}'
-    #    line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com'
-#  when: not root_fipsinstalled.exists
+    line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
@@ -535,16 +551,14 @@
     - rule_5.2.17
     - low
 
-- name: "SCORED | 5.2.18 | PATCH | Ensure SSH access is limited"
-  debug:
-    msg: "Edit the /etc/ssh/sshd_config file to set one or more of the following parameters: AllowUsers <list>, AllowGroups <list>, DenyUsers <list>,DenyGroups <list>"
+- name: "5.3.4 Ensure SSH access is limited (Automated)"
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: 'AllowUsers ec2-user'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
     - level1
-    - patch
-    - rule_5.2.18
-    - medium
 
 - name: "SCORED | 5.2.19 | PATCH | Ensure SSH warning banner is configured"
   lineinfile:
@@ -559,6 +573,15 @@
     - patch
     - rule_5.2.19
     - low
+
+- name: "5.3.21 Ensure SSH MaxStartups is configured (Automated)"
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: 'MaxStartups 10:30:60'
+  when:
+    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
+  tags:
+    - level1
 
 - name: "SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured"
   lineinfile:
@@ -603,7 +626,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -624,28 +646,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
-  tags:
-    - level1
-    - patch
-    - rule_5.3.2
-    - low
-
-- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured - Removal"
-  pamd:
-    name: '{{ item }}'
-    type: auth
-    control: required
-    module_path: pam_faillock.so
-    module_arguments: preauth audit silent deny=5 unlock_time=900
-    state: absent
-  ignore_errors: yes
-  loop:
-    - system-auth
-    - password-auth
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -800,7 +800,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -824,7 +823,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -845,7 +843,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -866,7 +863,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -894,7 +890,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -915,7 +910,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and not amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -936,7 +930,6 @@
     - password-auth
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_ad_ldap_joined_machine is defined and amazonlinux2cis_ad_ldap_joined_machine
   tags:
     - level1
     - patch
@@ -1626,7 +1619,6 @@
     line: 'umask {{ amazonlinux2cis_default_user_umask }}'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_default_user_umask is defined and amazonlinux2cis_modify_default_user_umask
   tags:
     - level1
     - patch
@@ -1641,7 +1633,6 @@
       line: 'umask {{ amazonlinux2cis_default_user_umask }}'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_default_user_umask is defined and amazonlinux2cis_modify_default_user_umask
   tags:
       - level1
       - patch
@@ -1656,7 +1647,6 @@
   register: profiled_dir
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_default_user_umask is defined and amazonlinux2cis_modify_default_user_umask
   tags:
     - level1
     - patch
@@ -1674,7 +1664,6 @@
   ignore_errors: yes
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_modify_default_user_umask is defined and amazonlinux2cis_modify_default_user_umask
   tags:
     - level1
     - patch
@@ -1723,3 +1712,13 @@
     - patch
     - rule_5.6
     - low
+
+- name: "5.7 Ensure access to the su command is restricted (Automated)"
+  shell: 'groupadd sugroup'
+  args:
+    executable: /bin/bash
+
+- name: "5.7 Ensure access to the su command is restricted (Automated)"
+  lineinfile:
+    path: /etc/pam.d/su
+    line: 'auth required pam_wheel.so use_uid group=sugroup'
