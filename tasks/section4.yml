@@ -404,17 +404,8 @@
 - name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
   lineinfile:
     dest: /etc/rsyslog.conf
-    regexp: '^\$FileCreateMode'
     line: '$FileCreateMode 0640'
     create: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_rsyslog is defined and amazonlinux2cis_rsyslog
-  tags:
-    - level1
-    - patch
-    - rule_4.2.1.3
-    - low
 
 - name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
   find:
@@ -422,20 +413,11 @@
     recurse: yes
     patterns: "*.conf"
   register: rsyslogd_conf_files
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
-    - amazonlinux2cis_rsyslog is defined and amazonlinux2cis_rsyslog
-  tags:
-    - level1
-    - patch
-    - rule_4.2.1.3
-    - low
 
 - name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
   lineinfile:
     state: present
     dest: "{{ item }}"
-    regexp: '^\$FileCreateMode'
     line: '$FileCreateMode 0640'
     backup: yes
   with_items: rsyslogd_conf_files.path
@@ -523,6 +505,21 @@
     - patch
     - rule_4.2.1.5
     - low
+
+- name: "SCORED | 4.2.2.1 Ensure journald is configured to send logs to rsyslog (Automated)"
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    line: 'ForwardToSyslog=yes'
+
+- name: "SCORED | 4.2.2.2 Ensure journald is configured to compress large log files (Automated)"
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    line: 'Compress=yes'
+
+- name: "SCORED | 4.2.2.2 4.2.2.3 Ensure journald is configured to write logfiles to persistent disk"
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    line: 'Storage=persistent'
 
 - name: "SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled"
   yum:

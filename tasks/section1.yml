@@ -653,6 +653,12 @@
     - rule_1.1.19
     - low
 
+- name: "SCORED | 1.1.24 Disable USB Storage (Automated)"
+  lineinfile:
+    path: /etc/modprobe.d/usb_storage.conf
+    line: 'install usb-storage /bin/true'
+    create: yes
+
 - name: "NOTSCORED | 1.2.1 | PATCH | Ensure package manager repositories are configured"
   command: /bin/true
   changed_when: no

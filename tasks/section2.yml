@@ -256,23 +256,19 @@
     - disable_service_checks
 
 - name: "SCORED | 2.1.7 | PATCH | Ensure NFS and RPC are not enabled"
-  systemd:
+  yum:
+    name: nfs-server
+    state: absent
+
+- name: "SCORED | 2.1.7 | PATCH | Ensure NFS and RPC are not enabled"
+  yum:
     name: rpcbind
-    state: stopped
-    enabled: no
-  ignore_errors: yes
-  when:
-    - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1 
-  tags:
-    - level1
-    - scored
-    - nfs
-    - rpc
-    - services
-    - patch
-    - rule_2.1.7
-    - low
-    - disable_service_checks
+    state: absent
+
+- name: "SCORED | 2.1.7 | PATCH | Ensure rsync is not enabled"
+  yum:
+    name: rsync
+    state: absent
 
 - name: "SCORED | 2.1.8 | PATCH | Ensure DNS Server is not enabled"
   systemd:
